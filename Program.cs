@@ -8,16 +8,21 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using WindowsInput;
+using WindowsInput.Native;
 
 namespace psani_hrave_hackr
 {
-    internal static class Program
+    internal class Program
     {
-        static void Main()
+        InputSimulator sim = new InputSimulator();
+        void Main()
         {
+            sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.TAB);
+            sim.Keyboard.KeyPress(VirtualKeyCode.SPACE);
             CaptureScreen();
         }
-        static void CaptureScreen()
+        void CaptureScreen()
         {
             Rectangle rect = new Rectangle(1531, 306, 803, 407);
             Bitmap bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
