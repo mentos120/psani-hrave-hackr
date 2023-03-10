@@ -25,9 +25,10 @@ namespace psani_hrave_hackr
                 .ModifiedKeyStroke(VirtualKeyCode.TAB, VirtualKeyCode.TAB)
                 .Sleep(500)
                 .KeyUp(VirtualKeyCode.MENU) 
-                .Sleep(500) 
+                .Sleep(10) 
                 .KeyPress(VirtualKeyCode.SPACE)
                 .Sleep(800);
+            Thread.Sleep(500);
             CaptureScreen(choose);
         }   
         static void CaptureScreen(string choose)
@@ -51,6 +52,7 @@ namespace psani_hrave_hackr
         }
         static void OResolve()
         {
+            Thread.Sleep(500);
             Rectangle rect = new Rectangle(1608, 339, 820, 420);
             Bitmap bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(bmp);
@@ -60,6 +62,7 @@ namespace psani_hrave_hackr
         }
         static void TPResolve()
         {
+            Thread.Sleep(100);
             Rectangle rect = new Rectangle(1500, 300, 820, 402);
             Bitmap bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(bmp);
@@ -121,7 +124,7 @@ namespace psani_hrave_hackr
             {
                 new InputSimulator().Keyboard
                 .TextEntry(c.ToString())
-                .Sleep(150);
+                .Sleep(5);
             }
         }
         static void OCRresolve()
