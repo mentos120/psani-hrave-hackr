@@ -18,113 +18,35 @@ namespace psani_hrave_hackr
     {
         static void Main()
         {
-            Console.WriteLine("TP/O/TGT/FISH [test psani / ostatni psani / bonus kolo / ryba");
-            string choose = Console.ReadLine();
             new InputSimulator().Keyboard
                 .KeyDown(VirtualKeyCode.MENU)
                 .ModifiedKeyStroke(VirtualKeyCode.TAB, VirtualKeyCode.TAB)
-                .Sleep(500)
-                .KeyUp(VirtualKeyCode.MENU) 
-                .Sleep(10) 
-                .KeyPress(VirtualKeyCode.SPACE)
-                .Sleep(800);
+                .Sleep(100)
+                .KeyUp(VirtualKeyCode.MENU)
+                .Sleep(500);           
             Thread.Sleep(500);
-            CaptureScreen(choose);
+            OResolve();
         }   
-        static void CaptureScreen(string choose)
-        {
-            switch (choose)
-            {
-                case "TP":
-                    TPResolve();
-                    break;
-                case "O":
-                    OResolve();
-                    break;
-                case "TGT":
-                    TGTResolve();
-                    break;
-                case "FISH":
-                    FishResolve();
-                    break;
-
-            }
-        }
         static void OResolve()
         {
             Thread.Sleep(500);
-            Rectangle rect = new Rectangle(1608, 339, 820, 420);
+            Rectangle rect = new Rectangle(62, 246, 2500, 150);
             Bitmap bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(bmp);
             g.CopyFromScreen(rect.Left, rect.Top, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
             bmp.Save("C:\\Users\\fabih\\Pictures\\psanihrave\\img.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
             OCRresolve();
-        }
-        static void TPResolve()
-        {
-            Thread.Sleep(100);
-            Rectangle rect = new Rectangle(1500, 300, 820, 402);
-            Bitmap bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
-            Graphics g = Graphics.FromImage(bmp);
-            g.CopyFromScreen(rect.Left, rect.Top, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
-            bmp.Save("C:\\Users\\fabih\\Pictures\\psanihrave\\img.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
-            OCRresolve();
-        }
-        static void TGTResolve()
-        {
-            for (int i = 0; i <= 20; i++)
-            {
-                Thread.Sleep(300);
-                Rectangle rect = new Rectangle(1946, 540, 151, 35);
-                Bitmap bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
-                Graphics g = Graphics.FromImage(bmp); 
-                g.CopyFromScreen(rect.Left, rect.Top, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
-                bmp.Save("C:\\Users\\fabih\\Pictures\\psanihrave\\img.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
-                var engine = new TesseractEngine("C:\\Users\\fabih\\source\\repos\\psani hrave hackr","ces", EngineMode.Default);
-                var img = Pix.LoadFromFile("C:\\Users\\fabih\\Pictures\\psanihrave\\img.bmp");
-                var page = engine.Process(img);
-                var text = page.GetText();
-                text.Remove(0, text.Length);
-                Console.WriteLine(text);
-                string cleanText = text.Replace("\n", " ").Replace("  ", " ");
-                char[] chars = cleanText.ToCharArray();
-                Console.WriteLine();
-                foreach (char c in chars) { Console.Write(c); }
-                WriteText(chars);
-            }            
-        }
-        static void FishResolve()
-        {
-            Thread.Sleep(4000);
-            for (int i =0; i < 20; i++)
-            {
-                Thread.Sleep(1300);
-                Rectangle rect = new Rectangle(1614, 402, 800, 339);
-                Bitmap bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
-                Graphics g = Graphics.FromImage(bmp);
-                g.CopyFromScreen(rect.Left, rect.Top, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
-                bmp.Save("C:\\Users\\fabih\\Pictures\\psanihrave\\img.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
-                var engine = new TesseractEngine("C:\\Users\\fabih\\source\\repos\\psani hrave hackr","ces", EngineMode.Default);
-                var img = Pix.LoadFromFile("C:\\Users\\fabih\\Pictures\\psanihrave\\img.bmp");
-                var page = engine.Process(img);
-                var text = page.GetText();
-                text.Remove(0, text.Length);
-                Console.WriteLine(text);
-                string cleanText = text.Replace("\n", "").Replace(" ", "");
-                char[] chars = cleanText.ToCharArray();
-                Console.WriteLine();
-                foreach (char c in chars) { Console.Write(c); }
-                WriteText(chars);
-            }
-            
         }
         static void WriteText(char[] chars)
         {
             foreach(char c in chars)
             {
+                Random r = new Random();
+                int rInt = r.Next(300, 500);
                 new InputSimulator().Keyboard
                 .TextEntry(c.ToString())
-                .Sleep(5);
+                .Sleep(rInt);
+                Console.WriteLine(rInt);
             }
         }
         static void OCRresolve()
@@ -134,7 +56,7 @@ namespace psani_hrave_hackr
             var page = engine.Process(img);
             var text = page.GetText();
             Console.WriteLine(text);
-            string cleanText = text.Replace("\n", " ").Replace("  ", " ").Remove(0, 2);
+            string cleanText = text.Remove(text.Length-1, 1);
             char[] chars = cleanText.ToCharArray(); 
             Console.WriteLine();
             foreach (char c in chars) { Console.Write(c); }
